@@ -7,7 +7,7 @@
   
   http://ocw.unican.es/ensenanzas-tecnicas/visualizacion-e-interaccion-grafica/material-de-clase-2/03-LineAlgorithms.pdf"
 
-  [{:keys [p1 p2 dx dy m b] :as line}]
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
 
   (loop [p p1
          result [p1]]
@@ -23,7 +23,7 @@
   http://ocw.unican.es/ensenanzas-tecnicas/visualizacion-e-interaccion-grafica/material-de-clase-2/03-LineAlgorithms.pdf
   http://web.cs.wpi.edu/~emmanuel/courses/cs543/slides/lecture9_p3.pdf
   https://www.siggraph.org/education/materials/HyperGraph/scanline/outprims/drawline.htm"
-  [{:keys [p1 p2 dx dy m b] :as line}]
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
 
   (cond
     (< m 1) (loop [p p1
@@ -48,11 +48,11 @@
   
   http://www.tutorialspoint.com/computer_graphics/line_generation_algorithm.htm"
 
-  [{:keys [p1 p2 dx dy m b] :as line}]
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
 
-  (let [steps (if (> dx dy) (Math/abs dx) (Math/abs dy))
-        x-increment (/ dx steps)
-        y-increment (/ dy steps)]
+  (let [steps (if (> 𝝙x 𝝙y) (Math/abs 𝝙x) (Math/abs 𝝙y))
+        x-increment (/ 𝝙x steps)
+        y-increment (/ 𝝙y steps)]
     (loop [p p1
            n 1
            result [p1]]
@@ -65,7 +65,7 @@
   "https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
   http://ocw.unican.es/ensenanzas-tecnicas/visualizacion-e-interaccion-grafica/material-de-clase-2/03-LineAlgorithms.pdf
   https://www.siggraph.org/education/materials/HyperGraph/scanline/outprims/drawline.htm"
-  [{:keys [p1 p2 dx dy m b] :as line}])
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}])
 
 ;; Midpoint Algorithm for Line Drawing http://www.cosc.canterbury.ac.nz/mukundan/cogr/LineMP.html
 

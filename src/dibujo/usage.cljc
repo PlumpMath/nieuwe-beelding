@@ -1,6 +1,6 @@
 (ns dibujo.usage
   (:require [dibujo.abstractions.point :refer [->Point round add]]
-            [dibujo.abstractions.line :refer [compute]]
+            [dibujo.abstractions.line :refer [compute new-line]]
             [dibujo.algorithms.line :refer [dda dsc dda2 bresenham]]))
 
 (def p1 (->Point 4 15))
