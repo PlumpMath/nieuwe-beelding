@@ -1,6 +1,5 @@
 (ns dibujo.algorithms.line
-  (:require [dibujo.abstractions.point :refer [->Point round add]]))
-
+  (:require [dibujo.abstractions.point :refer [->Point round add to-float]]))
 
 (defn dsc
   "Direct Scan Conversion
@@ -56,10 +55,47 @@
     (loop [p p1
            n 1
            result [p1]]
-      (let [next-point (round (add p (->Point x-increment y-increment)))]
+      (let [next-point (->> (->Point x-increment y-increment)
+                            (add p)
+                            to-float
+                            round)]
         (if (= n steps)
           (conj result p2)
           (recur next-point (inc n) (conj result next-point)))))))
+
+(defn ideal-line
+  "Non-optimized ideal line 
+  
+  When dy is greater than dx, the inner-loop of the algorithm must run
+  stepwise in y-direction, otherwise vise versa in x-direction. This
+  means that, we just change the x- and y-axis, or rotate the whole
+  coordinate system by 90 degrees, making the new dy less than dx.
+
+  http://www.codeproject.com/Articles/16564/Drawing-lines-in-Mozilla-based-browsers-and-the-In"
+
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
+
+  (let [sx (if (> 𝝙x 0) 1 -1)
+        sy (if (> 𝝙y 0) 1 -1)]
+    (cond
+      (> (Math/abs 𝝙x) (Math/abs 𝝙y)) (loop [p p1
+                                              result [p1]]
+                                      (let [x (+ (:x p) sx)
+                                            y (+ (* m (:x p)) b)
+                                            next-point (->Point x (Math/round (float y)))]
+                                        (if (= x (:x p2))
+                                          (conj result p2)
+                                          (recur next-point (conj result next-point)))))
+      :else (let [m (/ 𝝙x 𝝙y)
+                  b (- (:x p1) (* m (:y p1)))]
+              (loop [p p1
+                     result [p1]]
+                (let [x (+ (* m (:y p)) b)
+                      y (+ (:y p) sy)
+                      next-point (->Point (Math/round (float x)) y)]
+                  (if (= y (:y p2))
+                    (conj result p2)
+                    (recur next-point (conj result next-point)))))))))
 
 (defn bresenham
   "https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm

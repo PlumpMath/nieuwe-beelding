@@ -11,7 +11,7 @@
 ;; 𝝙x - delta x, x1 - x0
 ;; 𝝙y - delta y, y1 - y0
 ;; m - slope
-;; b - y intercept 
+;; b - y intercept, sometimes referred as pitch over X-axis 
 
 (defrecord Line 
   [p1 p2 𝝙x 𝝙y m b]
