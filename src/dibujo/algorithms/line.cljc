@@ -79,13 +79,13 @@
         sy (if (> 𝝙y 0) 1 -1)]
     (cond
       (> (Math/abs 𝝙x) (Math/abs 𝝙y)) (loop [p p1
-                                              result [p1]]
-                                      (let [x (+ (:x p) sx)
-                                            y (+ (* m (:x p)) b)
-                                            next-point (->Point x (Math/round (float y)))]
-                                        (if (= x (:x p2))
-                                          (conj result p2)
-                                          (recur next-point (conj result next-point)))))
+                                             result [p1]]
+                                        (let [x  (+ (:x p) sx)
+                                              y (+ (* m (:x p)) b)
+                                              next-point (->Point x (Math/round (float y)))]
+                                          (if (= x (:x p2))
+                                            (conj result p2)
+                                            (recur next-point (conj result next-point)))))
       :else (let [m (/ 𝝙x 𝝙y)
                   b (- (:x p1) (* m (:y p1)))]
               (loop [p p1
@@ -97,11 +97,51 @@
                     (conj result p2)
                     (recur next-point (conj result next-point)))))))))
 
+(defn ideal-line2
+  "Optimized ideal line 
+  
+  Therefore, our first optimization efforts will be, to get rid of
+  this evaluation, especially the multiplication. We do this by
+  incrementally calculating the right y- or x-value.
+
+  http://www.codeproject.com/Articles/16564/Drawing-lines-in-Mozilla-based-browsers-and-the-In"
+
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
+
+  (let [[sx 𝝙x] (if (> 𝝙x 0) [1 𝝙x] [-1 (- 𝝙x)])
+        [sy 𝝙y] (if (> 𝝙y 0) [1 𝝙y] [-1 (- 𝝙y)])]
+    (cond
+      (> (Math/abs 𝝙x) (Math/abs 𝝙y)) (loop [fraction (+ m 0.5)
+                                             p p1
+                                             result [p1]]
+                                        (let [x (+ (:x p) sx)
+                                              [y fraction] (if (> fraction 1)
+                                                             [(+ (:y p) sy) (- fraction 1)]
+                                                             [(:y p) fraction])
+                                              next-point (->Point x y)]
+                                          (if (= x (:x p2))
+                                            (conj result p2)
+                                            (recur (+ fraction m) next-point (conj result next-point)))))
+      :else (let [m (/ 𝝙x 𝝙y)]
+              (loop [fraction (+ m 0.5)
+                     p p1
+                     result [p1]]
+                (let [y (+ (:y p) sy)
+                      [x fraction] (if (> fraction 1)
+                                     [(+ (:x p) sx) (- fraction 1)]
+                                     [(:x p) fraction])
+                      next-point (->Point x y)]
+                  (if (= y (:y p2))
+                    (conj result p2)
+                    (recur (+ fraction m) next-point (conj result next-point)))))))))
+
 (defn bresenham
   "https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
   http://ocw.unican.es/ensenanzas-tecnicas/visualizacion-e-interaccion-grafica/material-de-clase-2/03-LineAlgorithms.pdf
   https://www.siggraph.org/education/materials/HyperGraph/scanline/outprims/drawline.htm"
-  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}])
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
+
+  )
 
 ;; Midpoint Algorithm for Line Drawing http://www.cosc.canterbury.ac.nz/mukundan/cogr/LineMP.html
 
