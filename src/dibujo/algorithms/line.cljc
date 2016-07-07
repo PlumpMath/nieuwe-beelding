@@ -1,5 +1,6 @@
 (ns dibujo.algorithms.line
-  (:require [dibujo.abstractions.point :refer [->Point round add to-float]]))
+  (:require [dibujo.abstractions.point :refer [->Point round add to-float]]
+            [dibujo.utils.math :as math]))
 
 (defn dsc
   "Direct Scan Conversion
@@ -12,7 +13,7 @@
          result [p1]]
     (let [x (inc (:x p))
           y (+ (* m (:x p)) b)
-          next-point (->Point x (Math/round (float y)))]
+          next-point (->Point x (math/round (float y)))]
       (if (= x (:x p2))
         (conj result p2)
         (recur next-point (conj result next-point))))))
@@ -29,7 +30,7 @@
                    result [p1]]
               (let [x (inc (:x p))
                     y (+ (:y p) m)
-                    next-point (->Point x (Math/round (float y)))]
+                    next-point (->Point x (math/round (float y)))]
                 (if (= x (:x p2))
                   (conj result p2)
                   (recur next-point (conj result next-point)))))
@@ -37,7 +38,7 @@
                    result [p1]]
               (let [y (inc (:y p))
                     x (+ (:x p) (/ 1 m))
-                    next-point (->Point (Math/round (float x)) y)]
+                    next-point (->Point (math/round (float x)) y)]
                 (if (= y (:y p2))
                   (conj result p2)
                   (recur next-point (conj result next-point)))))))
@@ -49,7 +50,7 @@
 
   [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
 
-  (let [steps (if (> 𝝙x 𝝙y) (Math/abs 𝝙x) (Math/abs 𝝙y))
+  (let [steps (if (> 𝝙x 𝝙y) (math/abs 𝝙x) (math/abs 𝝙y))
         x-increment (/ 𝝙x steps)
         y-increment (/ 𝝙y steps)]
     (loop [p p1
@@ -78,11 +79,11 @@
   (let [sx (if (> 𝝙x 0) 1 -1)
         sy (if (> 𝝙y 0) 1 -1)]
     (cond
-      (> (Math/abs 𝝙x) (Math/abs 𝝙y)) (loop [p p1
+      (> (math/abs 𝝙x) (math/abs 𝝙y)) (loop [p p1
                                              result [p1]]
                                         (let [x  (+ (:x p) sx)
                                               y (+ (* m (:x p)) b)
-                                              next-point (->Point x (Math/round (float y)))]
+                                              next-point (->Point x (math/round (float y)))]
                                           (if (= x (:x p2))
                                             (conj result p2)
                                             (recur next-point (conj result next-point)))))
@@ -92,7 +93,7 @@
                      result [p1]]
                 (let [x (+ (* m (:y p)) b)
                       y (+ (:y p) sy)
-                      next-point (->Point (Math/round (float x)) y)]
+                      next-point (->Point (math/round (float x)) y)]
                   (if (= y (:y p2))
                     (conj result p2)
                     (recur next-point (conj result next-point)))))))))
@@ -111,7 +112,7 @@
   (let [[sx 𝝙x] (if (> 𝝙x 0) [1 𝝙x] [-1 (- 𝝙x)])
         [sy 𝝙y] (if (> 𝝙y 0) [1 𝝙y] [-1 (- 𝝙y)])]
     (cond
-      (> (Math/abs 𝝙x) (Math/abs 𝝙y)) (loop [fraction (+ m 0.5)
+      (> (math/abs 𝝙x) (math/abs 𝝙y)) (loop [fraction (+ m 0.5)
                                              p p1
                                              result [p1]]
                                         (let [x (+ (:x p) sx)

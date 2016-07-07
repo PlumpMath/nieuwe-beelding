@@ -1,4 +1,5 @@
-(ns dibujo.abstractions.point)
+(ns dibujo.abstractions.point
+  (:require [dibujo.utils.math :as math]))
 
 (defprotocol IPoint
   (add [this p])
@@ -12,5 +13,5 @@
   (add [this p] (->Point (+ x (:x p)) (+ y (:y p))))
   (to-double [_] (->Point (double x) (double y)))
   (to-float [_] (->Point (float x) (float y)))
-  (to-native [_] (java.awt.Point. x y))
-  (round [this] (->Point (Math/round x) (Math/round y))))
+  (to-native [_] #?(:clj (java.awt.Point. x y)))
+  (round [this] (->Point (math/round x) (math/round y))))
