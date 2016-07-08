@@ -64,7 +64,7 @@
           (conj result p2)
           (recur next-point (inc n) (conj result next-point)))))))
 
-(defn ideal-line
+(defn bresenham1
   "Non-optimized ideal line 
   
   When dy is greater than dx, the inner-loop of the algorithm must run
@@ -98,7 +98,7 @@
                     (conj result p2)
                     (recur next-point (conj result next-point)))))))))
 
-(defn ideal-line2
+(defn bresenham2
   "Optimized ideal line 
   
   Therefore, our first optimization efforts will be, to get rid of
@@ -136,17 +136,62 @@
                     (conj result p2)
                     (recur (+ fraction m) next-point (conj result next-point)))))))))
 
-(defn bresenham
-  "https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
-  http://ocw.unican.es/ensenanzas-tecnicas/visualizacion-e-interaccion-grafica/material-de-clase-2/03-LineAlgorithms.pdf
-  https://www.siggraph.org/education/materials/HyperGraph/scanline/outprims/drawline.htm"
-  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
-
-  )
 
 ;; Midpoint Algorithm for Line Drawing http://www.cosc.canterbury.ac.nz/mukundan/cogr/LineMP.html
 
-(defn infinite-line 
-  ([𝝷 p] (infinite-line 𝝷 p (next (range))))
-  ([𝝷 p len] (lazy-seq
-              (cons (round p) (infinite-line 𝝷 (->Point (+ (:x p) (* (first len) (math/cos 𝝷))) (+ (:y p) (* (first len) (math/sin 𝝷)))) (next len))))))
+(defn bresenham3
+  "http://www.idav.ucdavis.edu/education/GraphicsNotes/Bresenhams-Algorithm.pdf"
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
+  (let [[increment-x 𝝙x] (if (pos? 𝝙x) [1 𝝙x] [-1 (- 𝝙x)])
+        [increment-y 𝝙y] (if (pos? 𝝙y) [1 𝝙y] [-1 (- 𝝙y)])]
+    (cond (>= 𝝙x 𝝙y) (loop [p p1
+                            𝞊 (- m 1)
+                            result [p1]]
+                       (let [x (+ (:x p) 1)
+                             [𝞊 y] (if (pos? 𝞊)
+                                     [(- 𝞊 1) (+ (:y p) increment-y)]
+                                     [𝞊 (:y p)])
+                             next-point (->Point x y)]
+                         (if (= x (:x p2))
+                           (conj result p2)
+                           (recur next-point (+ 𝞊 m) (conj result next-point)))))
+          (> 𝝙y 𝝙x) (let [m (/ 𝝙x 𝝙y)]
+                      (loop [p p1
+                             𝞊 (- m 1)
+                             result [p1]]
+                        (let [y (+ (:y p) 1)
+                              [𝞊 x] (if (pos? 𝞊)
+                                      [(- 𝞊 1) (+ (:x p) increment-x)]
+                                      [𝞊 (:x p)])
+                              next-point (->Point x y)]
+                          (if (= y (:y p2))
+                            (conj result p2)
+                            (recur next-point (+ 𝞊 m) (conj result next-point)))))))))
+
+(defn bresenham4
+  "http://www.idav.ucdavis.edu/education/GraphicsNotes/Bresenhams-Algorithm.pdf"
+  [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
+  (let [[increment-x 𝝙x] (if (pos? 𝝙x) [1 𝝙x] [-1 (- 𝝙x)])
+        [increment-y 𝝙y] (if (pos? 𝝙y) [1 𝝙y] [-1 (- 𝝙y)])]
+    (cond (>= 𝝙x 𝝙y) (loop [p p1
+                            𝞊 (- 𝝙y 𝝙x)
+                            result [p1]]
+                       (let [x (+ (:x p) 1)
+                             [𝞊 y] (if (pos? 𝞊)
+                                     [(- 𝞊 𝝙x) (+ (:y p) increment-y)]
+                                     [𝞊 (:y p)])
+                             next-point (->Point x y)]
+                         (if (= x (:x p2))
+                           (conj result p2)
+                           (recur next-point (+ 𝞊 𝝙y) (conj result next-point)))))
+          (> 𝝙y 𝝙x) (loop [p p1
+                           𝞊 (- 𝝙x 𝝙y)
+                           result [p1]]
+                      (let [y (+ (:y p) 1)
+                            [𝞊 x] (if (pos? 𝞊)
+                                    [(- 𝞊 𝝙y) (+ (:x p) increment-x)]
+                                    [𝞊 (:x p)])
+                            next-point (->Point x y)]
+                        (if (= y (:y p2))
+                          (conj result p2)
+                          (recur next-point (+ 𝞊 𝝙x) (conj result next-point))))))))
