@@ -13,5 +13,5 @@
   (add [this p] (->Point (+ x (:x p)) (+ y (:y p))))
   (to-double [_] (->Point (double x) (double y)))
   (to-float [_] (->Point (float x) (float y)))
-  (to-native [_] #?(:clj (java.awt.Point. x y)))
-  (round [this] (->Point (math/round x) (math/round y))))
+  (round [_] (->Point (math/round x) (math/round y)))
+  (to-native [_] #?(:clj (java.awt.Point. x y))))

@@ -146,3 +146,7 @@
 
 ;; Midpoint Algorithm for Line Drawing http://www.cosc.canterbury.ac.nz/mukundan/cogr/LineMP.html
 
+(defn infinite-line 
+  ([𝝷 p] (infinite-line 𝝷 p (next (range))))
+  ([𝝷 p len] (lazy-seq
+              (cons (round p) (infinite-line 𝝷 (->Point (+ (:x p) (* (first len) (math/cos 𝝷))) (+ (:y p) (* (first len) (math/sin 𝝷)))) (next len))))))

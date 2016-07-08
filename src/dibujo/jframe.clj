@@ -30,9 +30,9 @@
 
  
 
-(def g (.createGraphics bi))
-(.setColor g Color/BLACK)
-(.drawLine g 0 0 10 10)
-(.drawLine g 0 15 15 0)
+;; (def g (.createGraphics bi))
+;; (.setColor g Color/BLACK)
+;; (.drawLine g 0 0 10 10)
+;; (.drawLine g 0 15 15 0)
 
 
