@@ -1,9 +1,7 @@
 (ns dibujo.algorithms.circle
   (:require
-   [dibujo.abstractions.point :refer [->Point round add to-float]]
+   [dibujo.abstractions.point :refer [->Point add]]
    [dibujo.utils.math :as math]))
-
-;; http://www.cse.iitm.ac.in/~vplab/courses/CG/PDF/LINE_CIRCLE_DRAW.pdf
 
 (defn bresenham
   "http://web.engr.oregonstate.edu/~sllu/bcircle.pdf"
@@ -27,3 +25,6 @@
           (recur (dec x) (inc y) (+ x-change 2) (+ y-change 2) (+ 𝝴 y-change x-change) (concat result (plot-8-circle-points x y)))
           (recur x (inc y) x-change (+ y-change 2) (+ 𝝴 y-change) (concat result (plot-8-circle-points x y))))
         result))))
+
+;; losange drawing, invert the recur fn positions
+;; http://www.cse.iitm.ac.in/~vplab/courses/CG/PDF/LINE_CIRCLE_DRAW.pdf
