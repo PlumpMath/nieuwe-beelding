@@ -21,3 +21,5 @@
       (if (= x (:x p2))
         (conj result p2)
         (recur next-point (+ D 𝝙y) (conj result next-point))))))
+
+;; Midpoint Algorithm for Line Drawing http://www.cosc.canterbury.ac.nz/mukundan/cogr/LineMP.html

@@ -137,8 +137,6 @@
                     (recur (+ fraction m) next-point (conj result next-point)))))))))
 
 
-;; Midpoint Algorithm for Line Drawing http://www.cosc.canterbury.ac.nz/mukundan/cogr/LineMP.html
-
 (defn bresenham3
   "http://www.idav.ucdavis.edu/education/GraphicsNotes/Bresenhams-Algorithm.pdf"
   [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
@@ -169,7 +167,8 @@
                             (recur next-point (+ 𝞊 m) (conj result next-point)))))))))
 
 (defn bresenham4
-  "http://www.idav.ucdavis.edu/education/GraphicsNotes/Bresenhams-Algorithm.pdf"
+  "Integer arithmetic
+  http://www.idav.ucdavis.edu/education/GraphicsNotes/Bresenhams-Algorithm.pdf"
   [{:keys [p1 p2 𝝙x 𝝙y m b] :as line}]
   (let [[increment-x 𝝙x] (if (pos? 𝝙x) [1 𝝙x] [-1 (- 𝝙x)])
         [increment-y 𝝙y] (if (pos? 𝝙y) [1 𝝙y] [-1 (- 𝝙y)])]

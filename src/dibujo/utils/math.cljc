@@ -31,3 +31,6 @@
 
 (def pi #?(:clj Math/PI
            :cljs js/Math.PI))
+
+(defn exp [x n]
+  (reduce * (repeat n x)))

@@ -5,8 +5,8 @@
   (add [this p])
   (to-float [_])
   (to-double [_])
-  (to-native [_])
-  (round [_]))
+  (round [_])
+  (to-native [_]))
 
 (defrecord Point [x y]
   IPoint
@@ -14,4 +14,5 @@
   (to-double [_] (->Point (double x) (double y)))
   (to-float [_] (->Point (float x) (float y)))
   (round [_] (->Point (math/round x) (math/round y)))
-  (to-native [_] #?(:clj (java.awt.Point. x y))))
+  (to-native [this] #?(:clj (java.awt.Point. x y)
+                       :cljs (clj->js this))))
