@@ -34,3 +34,6 @@
 
 (defn exp [x n]
   (reduce * (repeat n x)))
+
+(defn degrees-to-radians [𝝷] (* 𝝷 (/ pi 180)))
+(defn radians-to-degrees [rad] (* rad (/ 180 pi)))

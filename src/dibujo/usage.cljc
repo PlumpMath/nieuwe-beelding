@@ -14,12 +14,13 @@
 (def line-by-point #(-> (line/compute p1 p2 bresenham4)
                    draw))
 
-(def line-by-angle #(draw (take 25 (infinite-line 45 p1))))
+(def line-by-angle #(draw (take 25 (infinite-line 30 p2))))
 
-(def circles #(let [circle (circle/compute p2 20 bresenham)
-                    less-dense (take-nth 3 circle)
-                    random (random-sample 0.05 circle)]
-                (draw random)))
+(def circles (fn [] (let [circle (circle/compute p2 20 bresenham)
+                          less-dense (take-nth 3 circle)
+                          random (random-sample 0.05 circle)
+                          octant (fn [n circle] (map #(nth % n) (partition 8 circle)))]
+                      (draw (octant 5 circle)))))
 
 ;(defn arc [points p1 p2] (filter #(<= 100 (:y %) 154) (circle/compute p 90 bresenham)))
 
