@@ -194,3 +194,10 @@
                         (if (= y (:y p2))
                           (conj result p2)
                           (recur next-point (+ 𝞊 𝝙x) (conj result next-point))))))))
+
+
+;; More stuff
+;; https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+;; http://ocw.unican.es/ensenanzas-tecnicas/visualizacion-e-interaccion-grafica/material-de-clase-2/03-LineAlgorithms.pdf
+;; https://www.siggraph.org/education/materials/HyperGraph/scanline/outprims/drawline.htm
+;; Midpoint Algorithm for Line Drawing http://www.cosc.canterbury.ac.nz/mukundan/cogr/LineMP.html
