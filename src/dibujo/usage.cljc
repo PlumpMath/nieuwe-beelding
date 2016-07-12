@@ -12,15 +12,32 @@
 (def p2 (->Point 26 24))
 
 (def line-by-point #(-> (line/compute p1 p2 bresenham4)
-                   draw))
+                        draw))
 
 (def line-by-angle #(draw (take 25 (infinite-line 30 p2))))
 
-(def circles (fn [] (let [circle (circle/compute p2 20 bresenham)
-                          less-dense (take-nth 3 circle)
-                          random (random-sample 0.05 circle)
-                          octant (fn [n circle] (map #(nth % n) (partition 8 circle)))]
-                      (draw (octant 5 circle)))))
+(def circle (circle/compute p2 20 bresenham))
 
-;(defn arc [points p1 p2] (filter #(<= 100 (:y %) 154) (circle/compute p 90 bresenham)))
+(defn octant [n circle]
+  {:pre [(<= 0 n 7)]}
+  (let [octant (fn [n circle] (map #(nth % n) (partition 8 circle)))]
+    (octant n circle)))
 
+(def octants #(concat (octant 3 circle) (octant 7 circle)))
+
+(def less-dense (take-nth 3 circle))
+(def random (random-sample 0.05 circle))
+
+(defn missing-head [n circle]
+  (let [points (apply interleave (partition 8 circle))]
+    (drop n points)))
+
+(defn missing-tail [n circle]
+  (let [points (apply interleave (partition 8 circle))]
+    (drop-last n points)))
+
+(defn arcs [m]
+  (flatten (for [n (range 8)]
+             (drop m (octant n circle)))))
+
+(def continuous #(concat (drop 4 (octant 3 circle)) (octant 7 circle) (octant 6 circle)))
