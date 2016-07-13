@@ -6,14 +6,14 @@
 (defn bresenham
   "http://web.engr.oregonstate.edu/~sllu/bcircle.pdf"
   [{:keys [p r] :as circle}]
-  (let [plot-8-circle-points (fn [x y] [(add p (->Point x y))
-                                        (add p (->Point (- x) y))
-                                        (add p (->Point (- x) (- y)))
+  (let [plot-8-circle-points (fn [x y] [(add p (->Point y (- x)))
                                         (add p (->Point x (- y)))
+                                        (add p (->Point x y))
                                         (add p (->Point y x))
                                         (add p (->Point (- y) x))
-                                        (add p (->Point (- y) (- x)))
-                                        (add p (->Point y (- x)))])]
+                                        (add p (->Point (- x) y))
+                                        (add p (->Point (- x) (- y)))
+                                        (add p (->Point (- y) (- x)))])]
     (loop [x r
            y 0
            x-change (- 1 (* r 2))
