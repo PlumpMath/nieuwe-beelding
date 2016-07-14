@@ -1,9 +1,11 @@
 (ns dibujo.usage
-  (:require [dibujo.abstractions.point :refer [->Point round add]]
+  (:require [dibujo.abstractions.point :refer [->Point round add equal?]]
+            [dibujo.abstractions.rectangle :refer [->Rectangle]]
             [dibujo.abstractions.line :as line :refer [new-line]]
             [dibujo.abstractions.circle :as circle :refer [new-circle]]
             [dibujo.algorithms.line :as line-algos :refer [dda dsc dda2 bresenham1 bresenham2 bresenham3 bresenham4]]
             [dibujo.algorithms.circle :as circle-algos :refer [bresenham]]
+            [dibujo.algorithms.rectangle :refer [grid]]
             [dibujo.algorithms.development :as dev :refer [infinite-line]]
             #?(:clj [dibujo.utils.jframe :refer [draw]]
                :cljs [dibujo.utils.canvas :refer [draw]])))
@@ -46,3 +48,7 @@
                     octants (partition (/ (count octants) 8) octants)
                     octants (map-indexed (fn [i coll] (if (odd? i) (reverse coll) coll)) octants)]
                 (flatten octants)))
+
+(def r (->Rectangle p1 40 40))
+
+(def grid-4x4 #(draw (grid r 4 4)))
