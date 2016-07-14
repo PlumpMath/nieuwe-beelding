@@ -40,4 +40,9 @@
   (flatten (for [n (range 8)]
              (drop m (octant n circle)))))
 
-(def continuous #(concat (drop 4 (octant 3 circle)) (octant 7 circle) (octant 6 circle)))
+(def continuous #(concat (drop 4 (octant 0 circle)) (octant 1 circle) (octant 2 circle)))
+
+(def ordered #(let [octants (apply interleave (partition 8 (circle/compute (->Point 35 24) 20 bresenham)))
+                    octants (partition (/ (count octants) 8) octants)
+                    octants (map-indexed (fn [i coll] (if (odd? i) (reverse coll) coll)) octants)]
+                (flatten octants)))
