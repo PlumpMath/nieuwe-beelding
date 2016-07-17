@@ -1,4 +1,4 @@
-(ns dibujo.abstractions.rectangle)
+(ns nieuwe-beelding.abstractions.rectangle)
 
 (defprotocol
     IRectangle)

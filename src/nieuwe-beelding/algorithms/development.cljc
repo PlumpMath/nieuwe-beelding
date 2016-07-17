@@ -1,6 +1,6 @@
-(ns dibujo.algorithms.development
-  (:require [dibujo.abstractions.point :refer [->Point round add]]
-            [dibujo.utils.math :as math]))
+(ns nieuwe-beelding.algorithms.development
+  (:require [nieuwe-beelding.abstractions.point :refer [->Point round add]]
+            [nieuwe-beelding.utils.math :as math]))
 
 ;; 𝝷 is the angle
 (defn infinite-line

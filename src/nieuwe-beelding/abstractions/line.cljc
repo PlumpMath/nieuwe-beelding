@@ -1,5 +1,5 @@
-(ns dibujo.abstractions.line
-  (:require [dibujo.utils.math :as math]))
+(ns nieuwe-beelding.abstractions.line
+  (:require [nieuwe-beelding.utils.math :as math]))
 
 (defprotocol ILine
   (delta-x [_])

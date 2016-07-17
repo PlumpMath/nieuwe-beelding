@@ -1,7 +1,7 @@
-(ns dibujo.algorithms.circle
+(ns nieuwe-beelding.algorithms.circle
   (:require
-   [dibujo.abstractions.point :refer [->Point add]]
-   [dibujo.utils.math :as math]))
+   [nieuwe-beelding.abstractions.point :refer [->Point add]]
+   [nieuwe-beelding.utils.math :as math]))
 
 (defn bresenham
   "http://web.engr.oregonstate.edu/~sllu/bcircle.pdf"

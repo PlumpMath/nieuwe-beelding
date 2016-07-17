@@ -1,4 +1,4 @@
-(ns dibujo.utils.math)
+(ns nieuwe-beelding.utils.math)
 
 (defn abs [n] #?(:clj (Math/abs n)
                  :cljs (js/Math.abs n)))

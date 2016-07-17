@@ -1,8 +1,7 @@
-(ns dibujo.abstractions.circle)
+(ns nieuwe-beelding.abstractions.circle)
 
 
-(defprotocol ICircle
- )
+(defprotocol ICircle)
 
 ; p is the center point
 (defrecord Circle [p r]

@@ -1,5 +1,5 @@
-(ns dibujo.abstractions.point
-  (:require [dibujo.utils.math :as math]))
+(ns nieuwe-beelding.abstractions.point
+  (:require [nieuwe-beelding.utils.math :as math]))
 
 (defprotocol IPoint
   (add [this p])

@@ -1,4 +1,4 @@
-(ns dibujo.jframe
+(ns nieuwe-beelding.utils.jframe
   (:import java.awt.Graphics
            java.awt.Color
            java.awt.Image

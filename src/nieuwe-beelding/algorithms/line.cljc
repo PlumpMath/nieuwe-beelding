@@ -1,6 +1,6 @@
-(ns dibujo.algorithms.line
-  (:require [dibujo.abstractions.point :refer [->Point round add to-float]]
-            [dibujo.utils.math :as math]))
+(ns nieuwe-beelding.algorithms.line
+  (:require [nieuwe-beelding.abstractions.point :refer [->Point round add to-float]]
+            [nieuwe-beelding.utils.math :as math]))
 
 (defn dsc
   "Direct Scan Conversion

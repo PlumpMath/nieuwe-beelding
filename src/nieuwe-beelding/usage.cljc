@@ -1,14 +1,14 @@
-(ns dibujo.usage
-  (:require [dibujo.abstractions.point :refer [->Point round add equal?]]
-            [dibujo.abstractions.rectangle :refer [->Rectangle]]
-            [dibujo.abstractions.line :as line :refer [new-line]]
-            [dibujo.abstractions.circle :as circle :refer [new-circle]]
-            [dibujo.algorithms.line :as line-algos :refer [dda dsc dda2 bresenham1 bresenham2 bresenham3 bresenham4]]
-            [dibujo.algorithms.circle :as circle-algos :refer [bresenham]]
-            [dibujo.algorithms.rectangle :refer [grid]]
-            [dibujo.algorithms.development :as dev :refer [infinite-line]]
-            #?(:clj [dibujo.utils.jframe :refer [draw]]
-               :cljs [dibujo.utils.canvas :refer [draw]])))
+(ns nieuwe-beelding.usage
+  (:require [nieuwe-beelding.abstractions.point :refer [->Point round add equal?]]
+            [nieuwe-beelding.abstractions.rectangle :refer [->Rectangle]]
+            [nieuwe-beelding.abstractions.line :as line :refer [new-line]]
+            [nieuwe-beelding.abstractions.circle :as circle :refer [new-circle]]
+            [nieuwe-beelding.algorithms.line :as line-algos :refer [dda dsc dda2 bresenham1 bresenham2 bresenham3 bresenham4]]
+            [nieuwe-beelding.algorithms.circle :as circle-algos :refer [bresenham]]
+            [nieuwe-beelding.algorithms.rectangle :refer [grid]]
+            [nieuwe-beelding.algorithms.development :as dev :refer [infinite-line]]
+            #?(:clj [nieuwe-beelding.utils.jframe :refer [draw]]
+               :cljs [nieuwe-beelding.utils.canvas :refer [draw]])))
 
 (def p1 (->Point 1 1))
 (def p2 (->Point 26 24))

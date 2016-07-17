@@ -1,4 +1,4 @@
-(ns dibujo.utils.canvas)
+(ns nieuwe-beelding.utils.canvas)
 
 ;; will draw a black pixel in the canvas (The width attribute defaults to 300, and the height attribute defaults to 150).
 (defn draw [points]

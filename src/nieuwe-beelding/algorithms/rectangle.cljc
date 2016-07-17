@@ -1,6 +1,6 @@
-(ns dibujo.algorithms.rectangle
-  (:require [dibujo.abstractions.point :refer [->Point equal?]]
-            [dibujo.utils.math :as math]))
+(ns nieuwe-beelding.algorithms.rectangle
+  (:require [nieuwe-beelding.abstractions.point :refer [->Point equal?]]
+            [nieuwe-beelding.utils.math :as math]))
 
 
 (defn grid
