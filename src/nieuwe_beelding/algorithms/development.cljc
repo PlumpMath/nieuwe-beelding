@@ -17,3 +17,4 @@
               (cons (round p) (infinite-line2 𝝷 (->Point (+ (:x p) (* (first len) (math/cos 𝝷))) (+ (:y p) (* (first len) (math/sin 𝝷)))) (next len))))))
 
 
+;; sangaku

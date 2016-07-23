@@ -1,4 +1,5 @@
 (ns nieuwe-beelding.utils.jframe
+  (:require [nieuwe-beelding.abstractions.point :refer [get-color]])
   (:import java.awt.Graphics
            java.awt.Color
            java.awt.Image
@@ -20,7 +21,7 @@
 (defn draw [points]
   (let [d (Dimension. 300 300)
         bi (BufferedImage. (.width d) (.height d) BufferedImage/TYPE_INT_ARGB)
-        draw-pixel (fn [p] (let [c (.getRGB Color/BLACK)]
+        draw-pixel (fn [p] (let [c (or (get-color p) (.getRGB Color/BLACK))]
                             (.setRGB bi (:x p) (:y p) c)))]
     (doseq [p points]
       (draw-pixel p))

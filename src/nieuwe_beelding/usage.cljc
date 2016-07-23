@@ -1,5 +1,5 @@
 (ns nieuwe-beelding.usage
-  (:require [nieuwe-beelding.abstractions.point :refer [->Point round add equal?]]
+  (:require [nieuwe-beelding.abstractions.point :refer [->Point round add equal? set-color]]
             [nieuwe-beelding.abstractions.rectangle :refer [->Rectangle]]
             [nieuwe-beelding.abstractions.line :as line :refer [new-line]]
             [nieuwe-beelding.abstractions.circle :as circle :refer [new-circle]]
@@ -8,13 +8,34 @@
             [nieuwe-beelding.algorithms.rectangle :refer [grid]]
             [nieuwe-beelding.algorithms.development :as dev :refer [infinite-line]]
             #?(:clj [nieuwe-beelding.utils.jframe :refer [draw]]
-               :cljs [nieuwe-beelding.utils.canvas :refer [draw]])))
+               :cljs [nieuwe-beelding.utils.canvas :refer [draw]]))
+  #?(:clj (:import java.awt.Color)))
 
 (def p1 (->Point 1 1))
 (def p2 (->Point 26 24))
 
 (def line-by-point #(-> (line/compute p1 p2 bresenham4)
                         draw))
+
+(def red-line #(->> (line/compute p1 p2 bresenham4)
+                    (map (fn [p] (set-color p (.getRGB Color/RED))) )
+                    draw))
+
+(def triangle #(let [p1 (->Point 10 10)
+                     p2 (->Point 26 24)
+                     p3 (->Point 2 24)
+                     l1 (line/compute p1 p2 bresenham4)
+                     l2 (line/compute p1 p3 bresenham4)
+                     l3 (line/compute p3 p2 bresenham4)]
+                 (draw (concat l1 l2 l3))))
+
+(def triangle2 #(let [p1 (->Point 10 10)
+                      p2 (->Point 26 24)
+                      p3 (->Point 10 24)
+                     l1 (line/compute p1 p2 bresenham4)
+                     l2 (line/compute p1 p3 bresenham4)
+                     l3 (line/compute p3 p2 bresenham4)]
+                 (draw (concat l1 l2 l3))))
 
 (def line-by-angle #(draw (take 25 (infinite-line 30 p2))))
 

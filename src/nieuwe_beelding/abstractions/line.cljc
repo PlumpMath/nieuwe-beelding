@@ -21,7 +21,10 @@
   ILine
   (delta-x [_] (- (:x p2) (:x p1)))
   (delta-y [_] (- (:y p2) (:y p1)))
-  (slope [_] (/ 𝝙y 𝝙x))
+  (slope [_] (cond
+               (= (:x p1) (:x p2)) 2 ;; vertical line, slope is undefined
+               (= (:y p1) (:y p2)) 0 ;; horizontal line, slope is 0
+               :else (/ 𝝙y 𝝙x)) )
   (y-intercept [_] (- (:y p1) (* m (:x p1))))
   (angle [_] (* (math/atan m) (/ 180 math/pi))))
 
