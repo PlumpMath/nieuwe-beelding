@@ -28,12 +28,13 @@
     (display bi d)))
 
 
-
- 
-
-;; (def g (.createGraphics bi))
-;; (.setColor g Color/BLACK)
-;; (.drawLine g 0 0 10 10)
-;; (.drawLine g 0 15 15 0)
+(defn draw-line [p1 p2]
+  (let [d (Dimension. 300 300)
+        bi (BufferedImage. (.width d) (.height d) BufferedImage/TYPE_INT_ARGB)
+        g (.createGraphics bi)]
+    (doto g
+      (.setColor Color/BLACK)
+      (.drawLine (:x p1) (:y p1) (:x p2) (:y p2)))
+    (display bi d)))
 
 

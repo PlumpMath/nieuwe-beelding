@@ -14,6 +14,8 @@
 (deftask dev
   []
   (comp
+   (watch :verbose true)
+   (aot :namespace #{'nieuwe-beelding.utils.javafx})
    (repl :server true)
    (wait)))
 

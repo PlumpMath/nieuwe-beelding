@@ -7,7 +7,7 @@
             [nieuwe-beelding.algorithms.circle :as circle-algos :refer [bresenham]]
             [nieuwe-beelding.algorithms.rectangle :refer [grid]]
             [nieuwe-beelding.algorithms.development :as dev :refer [infinite-line]]
-            #?(:clj [nieuwe-beelding.utils.jframe :refer [draw]]
+            #?(:clj [nieuwe-beelding.utils.jframe :refer [draw draw-line]]
                :cljs [nieuwe-beelding.utils.canvas :refer [draw]]))
   #?(:clj (:import java.awt.Color)))
 
@@ -17,6 +17,7 @@
 (def line-by-point #(-> (line/compute p1 p2 bresenham4)
                         draw))
 
+(def native-line #(draw-line p1 p2))
 (def red-line #(->> (line/compute p1 p2 bresenham4)
                     (map (fn [p] (set-color p (.getRGB Color/RED))) )
                     draw))
