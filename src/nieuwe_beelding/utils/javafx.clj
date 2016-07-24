@@ -18,14 +18,12 @@
    :state state
    :name nieuwe-beelding.utils.javafx.Stage
    :extends javafx.application.Application
+   :methods [^:static [getStage [] clojure.lang.Atom]]
    :main true))
 
-(defn -init-state []
-  [[] (atom nil)])
-
 (defn draw-line []
-  (let [line (Line. 0 0 30 40)]
-    (.setStroke line Color/GREEN)
+  (let [line (Line. 10 10 40 50)]
+    (.setStroke line Color/RED)
     (.setStrokeWidth line 3)
     line))
 
@@ -35,17 +33,30 @@
     (.add (.getChildren root) (draw-line))
     root))
 
-(def content (atom (create-content)))
+(def primary-stage (atom nil))
+
+(defn -getStage [] primary-stage)
+
+(defn -init-state []
+  [[] (atom nil)])
 
 (defn -start [this stage]
   (Platform/setImplicitExit false)
-  (let [scene (Scene. @content)]
+  (let [scene (Scene. (create-content))]
     (.setScene stage scene)
-    (reset! (.state this) stage)
+    (reset! (.state this) this)
+    (reset! primary-stage stage)
     (.show stage)))
 
 (defn -main [& args]
-   (Application/launch nieuwe-beelding.utils.javafx.Stage (into-array String [])))
+  (Application/launch nieuwe-beelding.utils.javafx.Stage args))
 
-;(defn update [] (Platform/runLater #(show. @stage)))
 
+(defn display []
+  (if-let [stage @(nieuwe-beelding.utils.javafx.Stage/getStage)]
+    (Platform/runLater #(.show stage))
+    (future (Application/launch nieuwe-beelding.utils.javafx.Stage nil))))
+
+
+; (def new-scene (Scene. (fx/create-content)))
+; (Platform/runLater #(.setScene @(nieuwe-beelding.utils.javafx.Stage/getStage) new-scene))

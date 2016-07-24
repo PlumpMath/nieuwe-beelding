@@ -9,7 +9,9 @@
             [nieuwe-beelding.algorithms.development :as dev :refer [infinite-line]]
             #?(:clj [nieuwe-beelding.utils.jframe :refer [draw draw-line]]
                :cljs [nieuwe-beelding.utils.canvas :refer [draw]]))
-  #?(:clj (:import java.awt.Color)))
+  #?(:clj (:import java.awt.Color
+                   javafx.application.Application
+                   javafx.application.Platform)))
 
 (def p1 (->Point 1 1))
 (def p2 (->Point 26 24))
