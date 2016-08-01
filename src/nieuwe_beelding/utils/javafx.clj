@@ -14,49 +14,34 @@
    javafx.scene.shape.Arc
    javafx.scene.shape.Line)
   (:gen-class
-   :init init-state
-   :state state
    :name nieuwe-beelding.utils.javafx.Stage
    :extends javafx.application.Application
    :methods [^:static [getStage [] clojure.lang.Atom]]
    :main true))
 
-(defn draw-line []
-  (let [line (Line. 10 10 40 50)]
+(defn display [scene]
+  (let []
+    (if-let [stage @(nieuwe-beelding.utils.javafx.Stage/getStage)]
+      (do (Platform/runLater #(.setScene stage scene))
+          (Platform/runLater #(.show stage)))
+      (future (Application/launch nieuwe-beelding.utils.javafx.Stage nil)))))
+
+(defn draw-line [p1 p2]
+  (let [root (Pane.)
+        line (Line. (:x p1) (:y p1) (:x p2) (:y p2))]
     (.setStroke line Color/RED)
     (.setStrokeWidth line 3)
-    line))
-
-(defn create-content []
-  (let [root (Pane.)]
     (.setPrefSize root 300 300)
-    (.add (.getChildren root) (draw-line))
-    root))
+    (.add (.getChildren root) line)
+    (display (Scene. root))))
 
 (def primary-stage (atom nil))
 
 (defn -getStage [] primary-stage)
 
-(defn -init-state []
-  [[] (atom nil)])
-
 (defn -start [this stage]
   (Platform/setImplicitExit false)
-  (let [scene (Scene. (create-content))]
-    (.setScene stage scene)
-    (reset! (.state this) this)
-    (reset! primary-stage stage)
-    (.show stage)))
+  (reset! primary-stage stage))
 
-(defn -main [& args]
-  (Application/launch nieuwe-beelding.utils.javafx.Stage args))
-
-
-(defn display []
-  (if-let [stage @(nieuwe-beelding.utils.javafx.Stage/getStage)]
-    (Platform/runLater #(.show stage))
-    (future (Application/launch nieuwe-beelding.utils.javafx.Stage nil))))
-
-
-; (def new-scene (Scene. (fx/create-content)))
-; (Platform/runLater #(.setScene @(nieuwe-beelding.utils.javafx.Stage/getStage) new-scene))
+;; (defn -main [& args]
+;;   (Application/launch nieuwe-beelding.utils.javafx.Stage args))
